@@ -1,22 +1,22 @@
-# author: nick.reva@snap.com
-# created April 11, 2021
+# author: mariustanawa@gmail.com
+# created April 05, 2022
 nodes:
-- address: 192.168.50.101
-  port: "22"
-  internal_address: 192.168.50.101
-  role:
-  - controlplane
-  - etcd
-  - worker
-  hostname_override: node1
-  user: root
-  docker_socket: /var/run/docker.sock
-  ssh_key: ""
-  ssh_key_path: ~/.ssh/id_rsa
-  ssh_cert: ""
-  ssh_cert_path: ""
-  labels: {}
-  taints: []
+  - address: 192.168.50.101
+    port: "22"
+    internal_address: 192.168.50.101
+    role:
+      - controlplane
+      - etcd
+      - worker
+    hostname_override: node1
+    user: root
+    docker_socket: /var/run/docker.sock
+    ssh_key: ""
+    ssh_key_path: ~/.ssh/id_rsa
+    ssh_cert: ""
+    ssh_cert_path: ""
+    labels: {}
+    taints: []
 #- address: 192.168.50.102
 #  port: "22"
 #  internal_address: 192.168.50.102
