@@ -1,24 +1,53 @@
 Docker Threat Modeling
+
+
 Given Docker's system components and the STRIDE framework, identify five potential threats that may arise.
 1. Spoofing: It can happens if there's a malicious sidecar container.
             Also a Docker image may be spoofed with malicious images or libaries.
             That can allow an attacker to gain admin access and manipulate docker container.
-            Also we should be careful with communcation between Docker and Docker daemon and ensure it's enforced with TLS encryption.
+            Also we should be careful with communcation between Docker and Docker daemon and ensure it's enforced with
+            TLS encryption.
             To avoid a Man in the middle attack and compromise the Docker Image and Registry.
 
 2. Tampering: It can happen if Docker Daemon configuration is compromised which can lead to misconfiguration.
-              An attacker may hijack the docker client to pull down an image with malware attached due to misconfiguration of docker.
+              An attacker may hijack the docker client to pull down an image with malware attached due to
+              misconfiguration of docker.
 
-3. Denial of Service: By Default the container has no limit usage of memory. Daemon memory for the running container may be over-allocated, leading to a misconfiguration.
+3. Denial of Service: By Default the container has no limit usage of memory. Daemon memory for the running container
+may be over-allocated, leading to a misconfiguration.
 
 4. Elevation of Privilege: Usage of flag --privilege, there can be an authorization clien abuse.
 
-5. Information Disclosure: Due again to insecure daemon configuration file, an attacker can access the daemon file configuration and make malicious changes.
-                           Also if thereis a traffic network spoofing, an attacker can gain access to the host and other containers.
+5. Information Disclosure: Due again to insecure daemon configuration file, an attacker can access the daemon file
+                           configuration and make malicious changes.
+                           Also if there is a traffic network spoofing, an attacker can gain access to the host and other
+                           containers.
+
 
 
 Kubernetes Threat Modeling
-Given Kubernetes' system components and the STRIDE framework, identify five potential threats that may arise.
+Given Kubernetes's system components and the STRIDE framework, identify five potential threats that may arise.
+
 
 Docker-bench Run Results and Analysis
-From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+From the failed findings, select and document 3 findings from the Docker-bench results that you want to harden based on
+the 5 attack surface areas you identified in Step 1. At least 1 of the 3 hardened findings should be different from the
+ones mentioned in the exercise (i.e. 5.10, 5.14, and 5.22).
+1. [FAIL] 5.10 Ensure that the memory usage for container is limited (Score)
+    Description:
+    By default, all containers on a Docker host share resources equally. By using the resource management capabilities
+    of the Docker host, you can control the amount of memory that a container is able to use.
+    Remediation:
+    Run the container with only the memory it needs.
+2. [FAIL] 2.14.a Ensure Userland Proxy is Disabled (Scored
+    Description:
+    The Docker daemon starts a userland proxy service for port forwarding whenever a port is exposed.
+    Where hairpin NAT is available, this service is generally superfluous to requirements and can be disabled.
+    Remediation:
+    Ensure that the --userland-proxy parameter is set to false. It can be done via the CLI or editing the /etc/docker/daemon.json
+
+3.[FAIL] 3.17 Ensure that daemon.json file ownership is set to root:root (Scored)
+    Description:
+    You should verify that the daemon.json file individual ownership and group ownership is correctly set to root.
+    Remediation:
+    Give the ownership of /etc/docker/daemon.json to root using the chown command.
