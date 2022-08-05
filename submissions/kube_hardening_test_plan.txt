@@ -1,0 +1,6 @@
+Question: How will you test the changes?
+Answer: The change will be tested in a non-production environment like a test cluster.
+
+Question: How will you ensure the changes don't negatively affect your cluster?
+Answer: We can use the canary deployment technique to gradually control the change impact on the cluster but also
+implement monitoring and observablity using Prometheus and Grafana to see how the cluster react to those changes.
