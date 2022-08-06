@@ -1,0 +1,19 @@
+1. Incident commander name: Marius Tanawa Tsamo
+2. Executive Summary of what happened:
+An attacker deployed 3 additionnal crypto-mining pods (moneropool, minergate and cryptotonight). That attack is compromising
+the availability of service  by achieving and DDos.
+3. Summary of what was affected:
+The attack led to high CPU cluster node consumption. The cluster control plane and api-server will be affected due to the
+ shortage of resources.
+4. Summary of the impact:
+The cluster scaling, integrity and reliability is compromised. But also impact
+the customer experience because the requests might take longer to process.
+5. Summary of the remediation steps:
+The Cluster administrator can evict the pods launching the following command:
+kubectl --kubeconfig kube_config_cluster.yml delete pod <pod_name> --grace-period=0 --force>
+He will also limit resources consumptions with setting limits and enforcing security policies.
+Then he check grafana to see if the monitoring is back to normal.
+6. Summary of lessons learned:
+We should review access to the Kubernetes API server from administrative terminals and the Grafana dashboards.
+Admission have to be configure to disallow malicious/unknown images to be used to create containers.
+We should set an alert if the cpu reach 100% or exceeds at 95% for a long time.
